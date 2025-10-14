@@ -1,0 +1,13 @@
+{
+  "game": "Freeway",
+  "taskA_mod": [],
+  "taskB_mod": [
+    "all_black_cars"
+  ],
+  "timesteps_per_task": 40000,
+  "A_after_A_mean": 21.4,
+  "A_on_B_before_B_train": 21.3,
+  "B_after_B_mean": 21.4,
+  "A_after_B_mean": 21.3,
+  "forgetting_A": 0.09999999999999787
+}
