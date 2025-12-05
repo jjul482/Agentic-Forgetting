@@ -1,13 +1,13 @@
 {
-  "game": "Freeway",
+  "game": "Boxing",
   "taskA_mod": [],
   "taskB_mod": [
-    "all_black_cars"
+    "one_armed"
   ],
-  "timesteps_per_task": 40000,
-  "A_after_A_mean": 21.4,
-  "A_on_B_before_B_train": 21.3,
-  "B_after_B_mean": 21.4,
-  "A_after_B_mean": 21.3,
-  "forgetting_A": 0.09999999999999787
+  "timesteps_per_task": 10000000,
+  "A_after_A_mean": -9.1,
+  "A_on_B_before_B_train": -19.55,
+  "B_after_B_mean": 38.5,
+  "A_after_B_mean": 13.4,
+  "forgetting_A": -22.5
 }
