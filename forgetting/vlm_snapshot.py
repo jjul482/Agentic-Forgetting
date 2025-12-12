@@ -2,6 +2,7 @@ import os
 from typing import Tuple
 import gymnasium as gym
 import ale_py
+import matplotlib.pyplot as plt
 
 import numpy as np
 import torch
@@ -124,8 +125,8 @@ class AtariVLM:
         prompt = f"[INST] <image>\n{task_prompt} [/INST]"
 
         inputs = self.processor(
-            prompt,
-            image,
+            image=image,
+            text=prompt,
             return_tensors="pt",
         ).to(self.device)
 
@@ -159,8 +160,8 @@ class AtariVLM:
         prompt = f"[INST] <image>\n{task_prompt} [/INST]"
 
         inputs = self.processor(
-            prompt,
-            image,
+            image=image,
+            text=prompt,
             return_tensors="pt",
         ).to(self.device)
 
@@ -176,6 +177,12 @@ class AtariVLM:
 
         return last_hidden.detach().cpu(), text
 
+def show_frame_blocking(frame: np.ndarray, title: str = "Atari Frame"):
+    plt.figure(figsize=(4, 4))
+    plt.imshow(frame)
+    plt.axis("off")
+    plt.title(title)
+    plt.show()
 
 if __name__ == "__main__":
     # --- Example usage with a dummy Atari frame ---
@@ -196,7 +203,10 @@ if __name__ == "__main__":
 
     while not (done or truncated):
         # 3) Get pixel frame from Gymnasium
-        frame = get_gym_frame(env, obs)  # (H,W,3) uint8
+        frame = get_gym_frame(env, obs)
+
+        # --- NEW: show the frame and block until user closes the window ---
+        show_frame_blocking(frame, title="Current Atari State")
 
         # 4) Ask VLM about this state
         description = vlm.describe_state(task, frame)
@@ -205,5 +215,6 @@ if __name__ == "__main__":
         # 5) Take a random action just for the example
         action = env.action_space.sample()
         obs, reward, done, truncated, info = env.step(action)
+
 
     env.close()
